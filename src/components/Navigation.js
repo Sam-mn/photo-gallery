@@ -22,7 +22,7 @@ const Navigation = () => {
                 <Nav className='ml-auto'>
                     {currentUser ? (
                         <>
-                            <NavLink to='/' className='nav-link'>
+                            <NavLink to='/albums' className='nav-link'>
                                 My albums
                             </NavLink>
                             <NavDropdown

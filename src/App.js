@@ -4,6 +4,7 @@ import Signup from "./components/Signup";
 import Login from "./components/Login";
 import NotFound from "./components/NotFound";
 import AuthContextProvider from "./context/useAuth";
+import Albums from "./components/Albums/Albums";
 
 function App() {
     return (
@@ -16,6 +17,9 @@ function App() {
                     </Route>
                     <Route path='/login'>
                         <Login />
+                    </Route>
+                    <Route path='/albums'>
+                        <Albums />
                     </Route>
                     <Route path='*' element={<NotFound />} />
                 </Routes>
