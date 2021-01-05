@@ -20,7 +20,7 @@ const CreateAlbum = () => {
         db.collection("Albums").add({
             name: AlbumNameRef.current.value,
             owner: currentUser.uid,
-            AlbumId: uuidv4(),
+            albumId: uuidv4(),
         });
     };
 

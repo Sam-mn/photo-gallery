@@ -5,6 +5,7 @@ import Login from "./components/Login";
 import NotFound from "./components/NotFound";
 import AuthContextProvider from "./context/useAuth";
 import Albums from "./components/Albums/Albums";
+import Album from "./components/Albums/Album";
 
 function App() {
     return (
@@ -20,6 +21,9 @@ function App() {
                     </Route>
                     <Route path='/albums'>
                         <Albums />
+                    </Route>
+                    <Route path='/album/:name/:id'>
+                        <Album />
                     </Route>
                     <Route path='*' element={<NotFound />} />
                 </Routes>
