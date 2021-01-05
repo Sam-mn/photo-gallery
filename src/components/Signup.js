@@ -1,16 +1,29 @@
 import React, { useRef } from "react";
 import { Row, Col, Form, Button, Card } from "react-bootstrap";
 import { Link } from "react-router-dom";
+import { useAuth } from "../context/useAuth";
 
 const Signup = () => {
     const emailRef = useRef();
     const passwordRef = useRef();
     const confirmRef = useRef();
+    const { signup } = useAuth();
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
-        console.log(emailRef.current.value);
+        if (passwordRef.current.value !== confirmRef.current.value) {
+            console.log("The passwords dose not match");
+            return;
+        }
+
+        try {
+            await signup(emailRef.current.value, passwordRef.current.value);
+            console.log("we have a new user, yaaaaaay");
+        } catch (err) {
+            console.log(err);
+        }
     };
+
     return (
         <Row className='mt-5'>
             <Col md={{ span: 6, offset: 3 }}>
