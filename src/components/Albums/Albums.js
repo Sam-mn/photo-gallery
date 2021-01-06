@@ -5,10 +5,10 @@ import { Row, Container, Col, Card } from "react-bootstrap";
 import { db } from "../../firebase/index";
 
 const Albums = () => {
-    const [albums, setAlbums] = useState(null);
+    const [albums, setAlbums] = useState([]);
 
     useEffect(() => {
-        const unsubscribe = db.collection("Albums").onSnapshot((data) => {
+        const unsubscribe = db.collection("albums").onSnapshot((data) => {
             const allAlbums = [];
             data.forEach((album) => {
                 allAlbums.push({
@@ -28,9 +28,9 @@ const Albums = () => {
             <CreateAlbum />
             <Container>
                 <Row>
-                    {albums ? (
-                        albums.map((album) => (
-                            <Col md={4} className='mt-4'>
+                    {albums.length > 0 ? (
+                        albums.map((album, i) => (
+                            <Col md={4} className='mt-4' key={i}>
                                 <Card>
                                     <Link
                                         to={`/album/${album.name}/${album.albumId}`}
@@ -49,7 +49,7 @@ const Albums = () => {
                             </Col>
                         ))
                     ) : (
-                        <p>There is no album to show</p>
+                        <p className='text-white'>There is no album to show</p>
                     )}
                 </Row>
             </Container>

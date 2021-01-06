@@ -17,7 +17,7 @@ const CreateAlbum = () => {
     const handleOnSubmit = (e) => {
         e.preventDefault();
 
-        db.collection("Albums").add({
+        db.collection("albums").add({
             name: AlbumNameRef.current.value,
             owner: currentUser.uid,
             albumId: uuidv4(),

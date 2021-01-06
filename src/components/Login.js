@@ -1,6 +1,6 @@
 import { useRef, useState } from "react";
 import { Row, Col, Form, Button, Card } from "react-bootstrap";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useAuth } from "../context/useAuth";
 import Alert from "react-bootstrap/Alert";
 
@@ -10,6 +10,7 @@ const Login = () => {
     const [error, setError] = useState(false);
     const [msg, setMsg] = useState("");
     const { signIn, currentUser } = useAuth();
+    const navigate = useNavigate();
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -17,6 +18,7 @@ const Login = () => {
             await signIn(emailRef.current.value, passwordRef.current.value);
             setError(false);
             console.log("we are in now broooo, yaaaaaay");
+            navigate("/");
         } catch (err) {
             setError(true);
             setMsg(err.message);

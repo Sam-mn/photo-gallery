@@ -1,10 +1,12 @@
 import AddPhoto from "./AddPhoto";
+import { Container } from "react-bootstrap";
+import Photos from "./Photos";
 const Album = () => {
     return (
-        <>
+        <Container>
             <AddPhoto />
-            <h1>album</h1>
-        </>
+            <Photos />
+        </Container>
     );
 };
 

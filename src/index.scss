@@ -3,3 +3,26 @@
 body{
     background-color: #333;
 }
+
+.dropzone{
+    background-color: #ffffffa8;
+    padding: 0.3rem;
+    text-align: center;
+    border-radius: 0.25rem;
+}
+
+.reactionDiv{
+    position: absolute;
+    right: 20px;
+    top: -14.5px;
+}
+
+.likeIconDiv {
+  background-color: red;
+  border-radius: 50%;
+  height: 2rem;
+  width: 2rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
