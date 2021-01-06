@@ -1,6 +1,6 @@
 import React, { useRef } from "react";
 import { Row, Col, Form, Button, Card } from "react-bootstrap";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useAuth } from "../context/useAuth";
 
 const Signup = () => {
@@ -8,6 +8,7 @@ const Signup = () => {
     const passwordRef = useRef();
     const confirmRef = useRef();
     const { signup } = useAuth();
+    const navigate = useNavigate();
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -19,6 +20,7 @@ const Signup = () => {
         try {
             await signup(emailRef.current.value, passwordRef.current.value);
             console.log("we have a new user, yaaaaaay");
+            navigate("/");
         } catch (err) {
             console.log(err);
         }
