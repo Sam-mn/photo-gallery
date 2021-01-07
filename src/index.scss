@@ -5,10 +5,12 @@ body{
 }
 
 .dropzone{
-    background-color: #ffffffa8;
+    background-color: #fff;
     padding: 0.3rem;
     text-align: center;
     border-radius: 0.25rem;
+    width: 70%;
+    margin: 0 auto;
 }
 
 .reactionDiv{
@@ -18,7 +20,7 @@ body{
 }
 
 .likeIconDiv {
-  background-color: red;
+  background-color: green;
   border-radius: 50%;
   height: 2rem;
   width: 2rem;
@@ -27,9 +29,60 @@ body{
   align-items: center;
 }
 
+.dislikeIconDiv {
+  background-color: #ff0000b8;
+  border-radius: 50%;
+  height: 2rem;
+  width: 2rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+ 
+}
+
+.likeButton{
+    background-color: #008000b0;
+    height: 2rem;
+    width: 2rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 50%;
+    cursor: pointer;
+}
+
+.dislikeButton{
+  background-color: rgba(255, 0, 0, 0.418);
+  height: 2rem;
+  width: 2rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 50%;
+   cursor: pointer;
+}
+
 .editDiv{
     position: absolute;
     bottom: 0;
     right: 0;
     cursor: pointer;
+}
+
+.addPhotoDiv{
+    position: absolute;
+    display: block;
+    z-index: 99999;
+    width: 50%;
+    left: 20%;
+    background-color: #000000ad;
+    border-radius: 0.25rem;
+    min-height: 13rem;
+    padding-bottom: 2rem;
+}
+
+.photosList{
+   width: 70%;
+   margin: 0 auto;
+   border-radius: 0.25rem;
 }

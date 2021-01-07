@@ -5,7 +5,7 @@ import { ListGroup, Button } from "react-bootstrap";
 import { storage, db } from "../../firebase/index";
 import { useAuth } from "../../context/useAuth";
 
-const AddPhoto = () => {
+const AddPhoto = ({ setAdding }) => {
     const [droppedFiles, setDroppedFiles] = useState([]);
     const { id } = useParams();
     const { currentUser } = useAuth();
@@ -52,8 +52,11 @@ const AddPhoto = () => {
                 dislike: false,
             };
 
+            console.log(image);
             await db.collection("images").add(image);
         });
+
+        setAdding(false);
     };
 
     return (
@@ -80,7 +83,7 @@ const AddPhoto = () => {
             </Button>
             {droppedFiles &&
                 droppedFiles.map((file, i) => (
-                    <ListGroup variant='flush' key={i}>
+                    <ListGroup variant='flush' key={i} className='photosList'>
                         <ListGroup.Item className='d-flex justify-content-between align-items-center mt-1 p-1'>
                             <span>{file.name}</span>
                             <Button variant='outline-danger'>Delete</Button>

@@ -8,9 +8,8 @@ import {
 } from "react-bootstrap";
 import { useAuth } from "../../context/useAuth";
 import { db } from "../../firebase/index";
-import { v4 as uuidv4 } from "uuid";
 
-const CreateAlbum = () => {
+const CreateAlbum = ({ uuid }) => {
     const AlbumNameRef = useRef();
     const { currentUser } = useAuth();
 
@@ -20,7 +19,7 @@ const CreateAlbum = () => {
         db.collection("albums").add({
             name: AlbumNameRef.current.value,
             owner: currentUser.uid,
-            albumId: uuidv4(),
+            albumId: uuid(),
         });
     };
 

@@ -1,17 +1,19 @@
 import { useEffect, useState } from "react";
 import CreateAlbum from "./CreateAlbum";
 import { Link } from "react-router-dom";
-import { Row, Container, Col, Card, Form } from "react-bootstrap";
+import { Row, Container, Col, Card, Form, Button } from "react-bootstrap";
 import { db } from "../../firebase/index";
 import { useAuth } from "../../context/useAuth";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faEdit } from "@fortawesome/free-solid-svg-icons";
+import { faEdit, faTimes } from "@fortawesome/free-solid-svg-icons";
+import { v4 as uuidv4 } from "uuid";
 
 const Albums = () => {
     const [albums, setAlbums] = useState([]);
     const [edit, setEdit] = useState(false);
     const [albumName, setAlbumName] = useState("");
     const { currentUser } = useAuth();
+    const [adding, setAdding] = useState(false);
 
     useEffect(() => {
         const unsubscribe = db
@@ -30,7 +32,7 @@ const Albums = () => {
             });
 
         return unsubscribe;
-    }, []);
+    }, [currentUser.uid]);
 
     const handleEdit = () => {
         setEdit(!edit);
@@ -42,7 +44,6 @@ const Albums = () => {
 
     const handleOnSubmit = async (e, id) => {
         e.preventDefault();
-        console.log("hello");
         if (!albumName) {
             return;
         }
@@ -51,17 +52,49 @@ const Albums = () => {
             name: albumName,
         });
         setEdit(false);
+        setAdding(false);
+    };
+
+    const handleOnClick = () => {
+        setAdding(true);
     };
 
     return (
         <div>
-            <CreateAlbum />
             <Container>
+                <Button
+                    variant='outline-primary'
+                    onClick={handleOnClick}
+                    style={{ marginTop: "1rem" }}
+                >
+                    Create anew album
+                </Button>
+                {adding ? (
+                    <div className='addPhotoDiv'>
+                        <FontAwesomeIcon
+                            icon={faTimes}
+                            style={{
+                                color: "white",
+                                marginLeft: "0.5rem",
+                                cursor: "pointer",
+                            }}
+                            onClick={() => setAdding(false)}
+                        />
+                        <CreateAlbum uuid={uuidv4} />
+                    </div>
+                ) : (
+                    ""
+                )}
+
                 <Row>
                     {albums.length > 0 ? (
                         albums.map((album, i) => (
                             <Col md={4} className='mt-4' key={i}>
-                                <Card>
+                                <Card
+                                    style={{
+                                        width: "19rem",
+                                    }}
+                                >
                                     <Link
                                         to={`/album/${album.name}/${album.albumId}`}
                                     >
@@ -84,9 +117,12 @@ const Albums = () => {
                                                     <Form.Group>
                                                         <Form.Control
                                                             type='text'
-                                                            placeholder='Normal text'
+                                                            placeholder='Album name'
                                                             onChange={
                                                                 handleOnChange
+                                                            }
+                                                            defaultValue={
+                                                                album.name
                                                             }
                                                         />
                                                     </Form.Group>
