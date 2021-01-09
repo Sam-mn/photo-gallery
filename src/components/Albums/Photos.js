@@ -6,7 +6,25 @@ import Photo from "./Photo";
 
 const Photos = () => {
     const [uploadedPhotos, setUploadedPhotos] = useState([]);
+    const [checkedPhotos, setCheckedPhotos] = useState([]);
     const { id } = useParams();
+
+    const selectCheckedPhotos = () => {
+        return db
+            .collection("images")
+            .where("checked", "==", true)
+            .onSnapshot((snapshot) => {
+                const imgs = [];
+
+                snapshot.forEach((doc) => {
+                    imgs.push({
+                        id: doc.id,
+                        ...doc.data(),
+                    });
+                });
+                setCheckedPhotos(imgs);
+            });
+    };
 
     useEffect(() => {
         const unsubscribe = db
@@ -30,6 +48,7 @@ const Photos = () => {
 
     const handleLike = (id) => {
         db.collection("images").doc(id).update({ like: true, dislike: false });
+        console.log(checkedPhotos);
     };
 
     const handleDislike = (id) => {
@@ -39,11 +58,13 @@ const Photos = () => {
     const handleCheck = (id) => {
         console.log("check");
         db.collection("images").doc(id).update({ checked: false });
+        selectCheckedPhotos();
     };
 
     const handleUncheck = (id) => {
         console.log("uncheck");
         db.collection("images").doc(id).update({ checked: true });
+        selectCheckedPhotos();
     };
     return (
         <div className='mt-3'>
@@ -54,7 +75,16 @@ const Photos = () => {
                 handleCheck={handleCheck}
                 handleUncheck={handleUncheck}
             />
-            <Button variant='danger'>Delete</Button>
+            {checkedPhotos.length > 0 ? (
+                <>
+                    <Button variant='danger'>Delete</Button>
+                    <Button variant='primary' className='ml-1'>
+                        Add to new Album
+                    </Button>
+                </>
+            ) : (
+                ""
+            )}
         </div>
     );
 };
