@@ -10,7 +10,6 @@ import { v4 as uuidv4 } from "uuid";
 
 const Albums = () => {
     const [albums, setAlbums] = useState([]);
-    const [edit, setEdit] = useState(false);
     const [albumName, setAlbumName] = useState("");
     const { currentUser } = useAuth();
     const [adding, setAdding] = useState(false);
@@ -34,8 +33,10 @@ const Albums = () => {
         return unsubscribe;
     }, [currentUser.uid]);
 
-    const handleEdit = () => {
-        setEdit(!edit);
+    const handleEdit = (id) => {
+        db.collection("albums").doc(id).update({
+            editing: true,
+        });
     };
 
     const handleOnChange = (e) => {
@@ -51,7 +52,11 @@ const Albums = () => {
         await db.collection("albums").doc(id).update({
             name: albumName,
         });
-        setEdit(false);
+
+        db.collection("albums").doc(id).update({
+            editing: false,
+        });
+
         setAdding(false);
     };
 
@@ -105,7 +110,7 @@ const Albums = () => {
                                     </Link>
                                     <Card.Body>
                                         <Card.Title className='text-center'>
-                                            {edit ? (
+                                            {album.editing ? (
                                                 <Form
                                                     onSubmit={(e) =>
                                                         handleOnSubmit(
@@ -134,7 +139,7 @@ const Albums = () => {
                                     </Card.Body>
                                     <div
                                         className='editDiv'
-                                        onClick={handleEdit}
+                                        onClick={() => handleEdit(album.id)}
                                     >
                                         <FontAwesomeIcon icon={faEdit} />
                                     </div>
