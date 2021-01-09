@@ -1,13 +1,25 @@
+import { useState } from "react";
 import { Card, Row } from "react-bootstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faThumbsUp, faThumbsDown } from "@fortawesome/free-solid-svg-icons";
+import {
+    faThumbsUp,
+    faThumbsDown,
+    faSquare,
+    faCheckSquare,
+} from "@fortawesome/free-solid-svg-icons";
 import { SRLWrapper } from "simple-react-lightbox";
 
-const Photo = ({ uploadedPhotos, handleLike, handleDislike }) => {
+const Photo = ({
+    uploadedPhotos,
+    handleLike,
+    handleDislike,
+    handleCheck,
+    handleUncheck,
+}) => {
     return (
         <Row>
             {uploadedPhotos.map((photo, i) => (
-                <div className='col-md-4'>
+                <div className='col-md-4' key={photo.id}>
                     <Card
                         key={i}
                         style={{
@@ -40,7 +52,21 @@ const Photo = ({ uploadedPhotos, handleLike, handleDislike }) => {
                                 </div>
                             </div>
                         </Card.Body>
-
+                        {photo.checked ? (
+                            <div
+                                className='checkDiv'
+                                onClick={() => handleCheck(photo.id)}
+                            >
+                                <FontAwesomeIcon icon={faCheckSquare} />
+                            </div>
+                        ) : (
+                            <div
+                                className='checkDiv'
+                                onClick={() => handleUncheck(photo.id)}
+                            >
+                                <FontAwesomeIcon icon={faSquare} />
+                            </div>
+                        )}
                         {/* <div className='reactionDiv'>
                             {photo.like ? (
                                 <div className='likeIconDiv'>

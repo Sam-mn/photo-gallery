@@ -50,6 +50,7 @@ const AddPhoto = ({ setAdding }) => {
                 albumId: id,
                 like: false,
                 dislike: false,
+                checked: false,
             };
 
             console.log(image);
@@ -57,6 +58,14 @@ const AddPhoto = ({ setAdding }) => {
         });
 
         setAdding(false);
+    };
+
+    const handleOnDelete = (name) => {
+        console.log(name);
+        const newPhotosArr = droppedFiles.filter(
+            (photo) => photo.name !== name
+        );
+        setDroppedFiles(newPhotosArr);
     };
 
     return (
@@ -86,7 +95,12 @@ const AddPhoto = ({ setAdding }) => {
                     <ListGroup variant='flush' key={i} className='photosList'>
                         <ListGroup.Item className='d-flex justify-content-between align-items-center mt-1 p-1'>
                             <span>{file.name}</span>
-                            <Button variant='outline-danger'>Delete</Button>
+                            <Button
+                                variant='outline-danger'
+                                onClick={() => handleOnDelete(file.name)}
+                            >
+                                Delete
+                            </Button>
                         </ListGroup.Item>
                     </ListGroup>
                 ))}

@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
+import { Button } from "react-bootstrap";
 import { db } from "../../firebase/index";
 import Photo from "./Photo";
 
@@ -34,13 +35,26 @@ const Photos = () => {
     const handleDislike = (id) => {
         db.collection("images").doc(id).update({ like: false, dislike: true });
     };
+
+    const handleCheck = (id) => {
+        console.log("check");
+        db.collection("images").doc(id).update({ checked: false });
+    };
+
+    const handleUncheck = (id) => {
+        console.log("uncheck");
+        db.collection("images").doc(id).update({ checked: true });
+    };
     return (
         <div className='mt-3'>
             <Photo
                 uploadedPhotos={uploadedPhotos}
                 handleLike={handleLike}
                 handleDislike={handleDislike}
+                handleCheck={handleCheck}
+                handleUncheck={handleUncheck}
             />
+            <Button variant='danger'>Delete</Button>
         </div>
     );
 };

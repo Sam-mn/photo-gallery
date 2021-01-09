@@ -20,6 +20,7 @@ const CreateAlbum = ({ uuid }) => {
             name: AlbumNameRef.current.value,
             owner: currentUser.uid,
             albumId: uuid(),
+            editing: false,
         });
     };
 
