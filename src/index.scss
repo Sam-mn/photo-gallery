@@ -91,3 +91,17 @@ body{
     position: absolute;
     left: 0.5rem;
 }
+
+.homeDiv{
+    min-height: 60vh;
+    width: 100%;
+    color: #fff;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    p{
+        width: 70%;
+        text-align: center;
+    }
+}

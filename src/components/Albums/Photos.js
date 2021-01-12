@@ -9,7 +9,6 @@ import { v4 as uuidv4 } from "uuid";
 const Photos = () => {
     const [uploadedPhotos, setUploadedPhotos] = useState([]);
     const [checkedPhotos, setCheckedPhotos] = useState([]);
-    const [newToAlbum, setNewAlbum] = useState(false);
     const { id, name } = useParams();
     const { currentUser } = useAuth();
 

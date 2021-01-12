@@ -1,4 +1,3 @@
-import { useState } from "react";
 import { Card, Row } from "react-bootstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useAuth } from "../../context/useAuth";
@@ -21,7 +20,7 @@ const Photo = ({
     return (
         <Row>
             {uploadedPhotos.map((photo, i) => (
-                <div className='col-md-4' key={photo.id}>
+                <div className='col-md-4 my-3' key={photo.id}>
                     <Card
                         key={i}
                         style={{

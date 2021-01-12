@@ -15,7 +15,9 @@ const Navigation = () => {
     };
     return (
         <Navbar bg='light' expand='lg' className='py-0 px-5'>
-            <Navbar.Brand href='#home'>Photo gallery</Navbar.Brand>
+            <NavLink to='/' className='navbar-brand'>
+                Photo gallery
+            </NavLink>
 
             <Navbar.Toggle aria-controls='basic-navbar-nav' />
             <Navbar.Collapse id='basic-navbar-nav'>
@@ -29,7 +31,7 @@ const Navigation = () => {
                                 title={currentUser.email}
                                 id='basic-nav-dropdown'
                             >
-                                <NavDropdown.Item href='#action/3.1'>
+                                <NavDropdown.Item href='/profile'>
                                     Profile
                                 </NavDropdown.Item>
                                 <NavLink
