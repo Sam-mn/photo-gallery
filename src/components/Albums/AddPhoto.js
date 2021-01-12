@@ -47,7 +47,7 @@ const AddPhoto = ({ setAdding }) => {
                 size: file.size,
                 type: file.type,
                 url: fileUrl,
-                albumId: id,
+                albumId: [id],
                 like: false,
                 dislike: false,
                 checked: false,

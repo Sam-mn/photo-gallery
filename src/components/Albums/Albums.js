@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import CreateAlbum from "./CreateAlbum";
 import { Link } from "react-router-dom";
 import { Row, Container, Col, Card, Form, Button } from "react-bootstrap";
-import { db } from "../../firebase/index";
+import firebase, { db, storage } from "../../firebase/index";
 import { useAuth } from "../../context/useAuth";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEdit, faTimes } from "@fortawesome/free-solid-svg-icons";
@@ -64,6 +64,37 @@ const Albums = () => {
         setAdding(true);
     };
 
+    const handleDeleteAlbum = async (id, albumId) => {
+        await db.collection("albums").doc(id).delete();
+
+        await db
+            .collection("images")
+            .where("albumId", "array-contains", albumId)
+            .get()
+            .then((data) => {
+                const batch = db.batch();
+
+                data.forEach((photo) => {
+                    console.log(photo.data());
+                    if (photo.data().albumId.length > 1) {
+                        db.collection("images")
+                            .doc(photo.id)
+                            .update({
+                                albumId: firebase.firestore.FieldValue.arrayRemove(
+                                    albumId
+                                ),
+                            });
+                    } else {
+                        const desertRef = storage.ref(photo.data().path);
+                        desertRef.delete();
+                        batch.delete(photo.ref);
+                    }
+                });
+
+                return batch.commit();
+            });
+    };
+
     return (
         <div>
             <Container>
@@ -85,7 +116,7 @@ const Albums = () => {
                             }}
                             onClick={() => setAdding(false)}
                         />
-                        <CreateAlbum uuid={uuidv4} />
+                        <CreateAlbum uuid={uuidv4} setAdding={setAdding} />
                     </div>
                 ) : (
                     ""
@@ -97,7 +128,7 @@ const Albums = () => {
                             <Col md={4} className='mt-4' key={i}>
                                 <Card
                                     style={{
-                                        width: "19rem",
+                                        maxWidth: "19rem",
                                     }}
                                 >
                                     <Link
@@ -142,6 +173,25 @@ const Albums = () => {
                                         onClick={() => handleEdit(album.id)}
                                     >
                                         <FontAwesomeIcon icon={faEdit} />
+                                    </div>
+
+                                    <div>
+                                        <FontAwesomeIcon
+                                            icon={faTimes}
+                                            style={{
+                                                position: "absolute",
+                                                color: "black",
+                                                marginLeft: "0.5rem",
+                                                cursor: "pointer",
+                                                top: 0,
+                                            }}
+                                            onClick={() =>
+                                                handleDeleteAlbum(
+                                                    album.id,
+                                                    album.albumId
+                                                )
+                                            }
+                                        />
                                     </div>
                                 </Card>
                             </Col>

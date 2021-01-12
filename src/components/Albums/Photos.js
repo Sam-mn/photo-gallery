@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { Button } from "react-bootstrap";
-import { db, storage } from "../../firebase/index";
+import firebase, { db, storage } from "../../firebase/index";
 import Photo from "./Photo";
 import { useAuth } from "../../context/useAuth";
 import { v4 as uuidv4 } from "uuid";
@@ -16,28 +16,26 @@ const Photos = () => {
     const selectCheckedPhotos = () => {
         return db
             .collection("images")
-            .where("checked", "==", true)
+            .where("albumId", "array-contains", id)
             .onSnapshot((snapshot) => {
                 const imgs = [];
 
                 snapshot.forEach((doc) => {
-                    imgs.push({
-                        id: doc.id,
-                        ...doc.data(),
-                    });
+                    if (doc.data().checked) {
+                        imgs.push({
+                            id: doc.id,
+                            ...doc.data(),
+                        });
+                    }
                 });
                 setCheckedPhotos(imgs);
             });
     };
 
-    // useEffect(() => {
-    //     setCheckedPhotos();
-    // }, []);
-
     useEffect(() => {
         const unsubscribe = db
             .collection("images")
-            .where("albumId", "==", id)
+            .where("albumId", "array-contains", id)
             .onSnapshot((snapshot) => {
                 const imgs = [];
 
@@ -50,7 +48,7 @@ const Photos = () => {
 
                 setUploadedPhotos(imgs);
             });
-
+        selectCheckedPhotos();
         return unsubscribe;
     }, [id]);
 
@@ -86,27 +84,51 @@ const Photos = () => {
         });
 
         checkedPhotos.forEach(async (photo) => {
-            await db.collection("images").doc(photo.id).update({
-                albumId: newId,
-                checked: false,
-                like: false,
-                dislike: false,
-            });
+            console.log(photo.id);
+            await db
+                .collection("images")
+                .doc(photo.id)
+                .update({
+                    albumId: firebase.firestore.FieldValue.arrayUnion(newId),
+                    checked: false,
+                    like: false,
+                    dislike: false,
+                });
         });
     };
 
     const handleDeletePhoto = () => {
         checkedPhotos.forEach(async (photo) => {
-            await db.collection("images").doc(photo.id).delete();
+            await db
+                .collection("images")
+                .doc(photo.id)
+                .get()
+                .then(async (data) => {
+                    const doc = data.data();
+                    console.log(photo.id);
 
-            const desertRef = storage.ref(photo.path);
-
-            await desertRef.delete();
+                    if (doc.albumId.length > 1) {
+                        console.log("more than 1");
+                        await db
+                            .collection("images")
+                            .doc(photo.id)
+                            .update({
+                                albumId: firebase.firestore.FieldValue.arrayRemove(
+                                    id
+                                ),
+                            });
+                    } else {
+                        console.log("less than 1", photo.ref);
+                        const desertRef = storage.ref(doc.path);
+                        await desertRef.delete();
+                        db.collection("images").doc(photo.id).delete();
+                    }
+                });
         });
     };
 
     return (
-        <div className='mt-3'>
+        <div className='my-3'>
             <Photo
                 uploadedPhotos={uploadedPhotos}
                 handleLike={handleLike}
@@ -115,18 +137,18 @@ const Photos = () => {
                 handleUncheck={handleUncheck}
             />
             {checkedPhotos.length > 0 ? (
-                <>
-                    <Button variant='danger' onClick={handleDeletePhoto}>
-                        Delete
-                    </Button>
-                    <Button
-                        variant='primary'
-                        className='ml-1'
-                        onClick={handleAddTONewAlbum}
-                    >
+                <div className='my-3'>
+                    <Button variant='primary' onClick={handleAddTONewAlbum}>
                         Add to new Album
                     </Button>
-                </>
+                    <Button
+                        variant='danger'
+                        className='ml-1'
+                        onClick={handleDeletePhoto}
+                    >
+                        Delete
+                    </Button>
+                </div>
             ) : (
                 ""
             )}

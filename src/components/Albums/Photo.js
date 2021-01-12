@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { Card, Row } from "react-bootstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { useAuth } from "../../context/useAuth";
 import {
     faThumbsUp,
     faThumbsDown,
@@ -16,6 +17,7 @@ const Photo = ({
     handleCheck,
     handleUncheck,
 }) => {
+    const { currentUser } = useAuth();
     return (
         <Row>
             {uploadedPhotos.map((photo, i) => (
@@ -23,7 +25,7 @@ const Photo = ({
                     <Card
                         key={i}
                         style={{
-                            width: "19rem",
+                            maxWidth: "19rem",
                             border: photo.like
                                 ? "3px solid green"
                                 : photo.dislike
@@ -34,6 +36,28 @@ const Photo = ({
                         <SRLWrapper>
                             <Card.Img variant='top' src={photo.url} />
                         </SRLWrapper>
+                        {/* {currentUser ? (
+                            ""
+                        ) : (
+                            <Card.Body>
+                                <div className='d-flex justify-content-around'>
+                                    <div
+                                        className='dislikeButton'
+                                        variant='primary'
+                                        onClick={() => handleDislike(photo.id)}
+                                    >
+                                        <FontAwesomeIcon icon={faThumbsDown} />
+                                    </div>
+                                    <div
+                                        className='likeButton'
+                                        variant='primary'
+                                        onClick={() => handleLike(photo.id)}
+                                    >
+                                        <FontAwesomeIcon icon={faThumbsUp} />
+                                    </div>
+                                </div>
+                            </Card.Body>
+                        )} */}
                         <Card.Body>
                             <div className='d-flex justify-content-around'>
                                 <div
@@ -52,6 +76,7 @@ const Photo = ({
                                 </div>
                             </div>
                         </Card.Body>
+
                         {photo.checked ? (
                             <div
                                 className='checkDiv'

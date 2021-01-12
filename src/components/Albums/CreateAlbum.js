@@ -9,7 +9,7 @@ import {
 import { useAuth } from "../../context/useAuth";
 import { db } from "../../firebase/index";
 
-const CreateAlbum = ({ uuid }) => {
+const CreateAlbum = ({ uuid, setAdding }) => {
     const AlbumNameRef = useRef();
     const { currentUser } = useAuth();
 
@@ -22,6 +22,7 @@ const CreateAlbum = ({ uuid }) => {
             albumId: uuid(),
             editing: false,
         });
+        setAdding(false);
     };
 
     return (
