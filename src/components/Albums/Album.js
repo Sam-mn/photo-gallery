@@ -35,7 +35,7 @@ const Album = () => {
                         </CopyToClipboard>
                         {copied ? (
                             <span
-                                style={{ color: "green", marginLeft: "0.5rem" }}
+                                style={{ color: "#fff", marginLeft: "0.5rem" }}
                             >
                                 Copied.
                             </span>

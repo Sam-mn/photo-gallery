@@ -33,7 +33,13 @@ const Photo = ({
                         }}
                     >
                         <SRLWrapper>
-                            <Card.Img variant='top' src={photo.url} />
+                            <a href={photo.url} data-attribute='SRL'>
+                                <Card.Img
+                                    variant='top'
+                                    src={photo.url}
+                                    alt={photo.name}
+                                />
+                            </a>
                         </SRLWrapper>
                         {currentUser ? (
                             ""
