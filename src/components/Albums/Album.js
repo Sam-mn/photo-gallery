@@ -10,9 +10,11 @@ import { faTimes } from "@fortawesome/free-solid-svg-icons";
 const Album = () => {
     const [adding, setAdding] = useState(false);
     const { currentUser } = useAuth();
+
     const handleOnClick = () => {
         setAdding(true);
     };
+
     return (
         <Container>
             {currentUser && (

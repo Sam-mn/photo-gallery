@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import CreateAlbum from "./CreateAlbum";
 import { Link } from "react-router-dom";
 import { Row, Container, Col, Card, Form, Button } from "react-bootstrap";
@@ -75,13 +75,13 @@ const Albums = () => {
                     ""
                 )}
 
-                <Row>
-                    {loading ? (
-                        <div className='d-flex justify-content-center my-5'>
-                            <FadeLoader color={"#fff"} size={100} />
-                        </div>
-                    ) : (
-                        albums.map((album, i) => (
+                {loading ? (
+                    <div className='d-flex justify-content-center my-5'>
+                        <FadeLoader color={"#fff"} size={100} />
+                    </div>
+                ) : (
+                    <Row>
+                        {albums.map((album, i) => (
                             <Col md={4} className='mt-4' key={i}>
                                 <Card
                                     style={{
@@ -150,9 +150,9 @@ const Albums = () => {
                                     </div>
                                 </Card>
                             </Col>
-                        ))
-                    )}
-                </Row>
+                        ))}
+                    </Row>
+                )}
             </Container>
         </div>
     );

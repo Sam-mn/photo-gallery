@@ -35,7 +35,7 @@ const Photo = ({
                         <SRLWrapper>
                             <Card.Img variant='top' src={photo.url} />
                         </SRLWrapper>
-                        {/* {currentUser ? (
+                        {currentUser ? (
                             ""
                         ) : (
                             <Card.Body>
@@ -56,40 +56,33 @@ const Photo = ({
                                     </div>
                                 </div>
                             </Card.Body>
-                        )} */}
-                        <Card.Body>
-                            <div className='d-flex justify-content-around'>
-                                <div
-                                    className='dislikeButton'
-                                    variant='primary'
-                                    onClick={() => handleDislike(photo.id)}
-                                >
-                                    <FontAwesomeIcon icon={faThumbsDown} />
-                                </div>
-                                <div
-                                    className='likeButton'
-                                    variant='primary'
-                                    onClick={() => handleLike(photo.id)}
-                                >
-                                    <FontAwesomeIcon icon={faThumbsUp} />
-                                </div>
-                            </div>
-                        </Card.Body>
-
+                        )}
                         {currentUser &&
                             (photo.checked ? (
                                 <div
                                     className='checkDiv'
                                     onClick={() => handleCheck(photo.id)}
                                 >
-                                    <FontAwesomeIcon icon={faCheckSquare} />
+                                    <FontAwesomeIcon
+                                        icon={faCheckSquare}
+                                        style={{
+                                            color: "#fff",
+                                            cursor: "pointer",
+                                        }}
+                                    />
                                 </div>
                             ) : (
                                 <div
                                     className='checkDiv'
                                     onClick={() => handleUncheck(photo.id)}
                                 >
-                                    <FontAwesomeIcon icon={faSquare} />
+                                    <FontAwesomeIcon
+                                        icon={faSquare}
+                                        style={{
+                                            color: "#fff",
+                                            cursor: "pointer",
+                                        }}
+                                    />
                                 </div>
                             ))}
                     </Card>

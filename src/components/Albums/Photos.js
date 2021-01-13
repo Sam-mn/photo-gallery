@@ -1,5 +1,6 @@
+import { useState } from "react";
 import { useParams } from "react-router-dom";
-import { Button } from "react-bootstrap";
+import { Button, Alert } from "react-bootstrap";
 import { db } from "../../firebase/index";
 import Photo from "./Photo";
 import { FadeLoader } from "react-spinners";
@@ -11,7 +12,15 @@ import { useAuth } from "../../context/useAuth";
 const Photos = () => {
     const { id, name } = useParams();
     const { currentUser } = useAuth();
-    const { uploadedPhotos, loading, imagesLength } = useGetPhotos(id);
+    const [err, setErr] = useState(false);
+    const [msg, setMsg] = useState("");
+    const {
+        uploadedPhotos,
+        loading,
+        imagesLength,
+        likedPhotosLength,
+        dislikedPhotosLength,
+    } = useGetPhotos(id);
     const {
         checkedPhotos,
         selectCheckedPhotos,
@@ -47,8 +56,27 @@ const Photos = () => {
         selectCheckedPhotos();
     };
 
+    const checkLikedPhotos = () => {
+        if (likedPhotosLength + dislikedPhotosLength == imagesLength) {
+            handleAddTONewAlbum();
+            setErr(false);
+        } else {
+            console.log("its not equal");
+            setErr(true);
+            const leftPhotos =
+                imagesLength - (likedPhotosLength + dislikedPhotosLength);
+            setMsg(
+                `you still have ${leftPhotos} left, check it before you send it back`
+            );
+        }
+    };
+
     return (
         <div className='my-3'>
+            <p className='text-white'>
+                you are like {likedPhotosLength} photos.
+            </p>
+
             {loading ? (
                 <div className='d-flex justify-content-center my-5'>
                     <FadeLoader color={"#fff"} size={100} />
@@ -65,9 +93,10 @@ const Photos = () => {
 
             {!currentUser && (
                 <div className='my-3'>
-                    <Button variant='primary' onClick={handleAddTONewAlbum}>
+                    <Button variant='primary' onClick={checkLikedPhotos}>
                         Add to new Album
                     </Button>
+                    {err && <Alert variant={"warning"}>{msg}</Alert>}
                 </div>
             )}
 

@@ -9,7 +9,12 @@ const Home = () => {
     return (
         <Container>
             {currentUser && (
-                <p className='text-white my-4'>Welcome {currentUser.uid}</p>
+                <p className='text-white my-4'>
+                    Welcome{" "}
+                    {currentUser.displayName
+                        ? currentUser.displayName
+                        : currentUser.uid}
+                </p>
             )}
             <div className='homeDiv'>
                 <h1>WELCOME TO OUR WEBSITE</h1>

@@ -6,7 +6,6 @@ const useGetPhotos = (id) => {
     const [imagesLength, setImagesLength] = useState(0);
     const [likedPhotosLength, setLikedPhotosLength] = useState(0);
     const [dislikedPhotosLength, setDislikedPhotosLength] = useState(0);
-    const [checkPhotos, setCheckPhotos] = useState(false);
     const [loading, setLoading] = useState(true);
     useEffect(() => {
         const unsubscribe = db
@@ -44,6 +43,8 @@ const useGetPhotos = (id) => {
         uploadedPhotos,
         imagesLength,
         loading,
+        likedPhotosLength,
+        dislikedPhotosLength,
     };
 };
 
