@@ -11,6 +11,7 @@ const useGEtAlbums = () => {
         const unsubscribe = db
             .collection("albums")
             .where("owner", "==", currentUser.uid)
+            .orderBy("name")
             .onSnapshot((data) => {
                 const allAlbums = [];
                 data.forEach((album) => {

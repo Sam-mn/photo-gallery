@@ -11,6 +11,7 @@ const useGetPhotos = (id) => {
         const unsubscribe = db
             .collection("images")
             .where("albumId", "array-contains", id)
+            .orderBy("name")
             .onSnapshot((snapshot) => {
                 const imgs = [];
                 const likedPhotos = [];

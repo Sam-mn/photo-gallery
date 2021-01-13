@@ -27,18 +27,19 @@ const Photos = () => {
         likedPhoto,
         selectLikedPhotos,
     } = useSelectPhotos(id);
+
     const { handleDeletePhoto } = useDeletePhoto(checkedPhotos, id);
-    const { handleAddTONewAlbum } = useAddToNewAlbum(
-        checkedPhotos,
-        name,
-        likedPhoto,
-        id
-    );
+
+    const {
+        handleAddTONewAlbum,
+        addingErr,
+        confirmMsg,
+        sending,
+    } = useAddToNewAlbum(checkedPhotos, name, likedPhoto, id);
 
     const handleLike = (id) => {
         db.collection("images").doc(id).update({ like: true, dislike: false });
         selectLikedPhotos();
-        console.log(imagesLength);
     };
 
     const handleDislike = (id) => {
@@ -49,11 +50,13 @@ const Photos = () => {
     const handleCheck = (id) => {
         db.collection("images").doc(id).update({ checked: false });
         selectCheckedPhotos();
+        setErr(false);
     };
 
     const handleUncheck = (id) => {
         db.collection("images").doc(id).update({ checked: true });
         selectCheckedPhotos();
+        setErr(false);
     };
 
     const checkLikedPhotos = () => {
@@ -66,16 +69,24 @@ const Photos = () => {
             const leftPhotos =
                 imagesLength - (likedPhotosLength + dislikedPhotosLength);
             setMsg(
-                `you still have ${leftPhotos} left, check it before you send it back`
+                `you still have ${leftPhotos} photos left, check it before you send it back`
             );
         }
     };
 
     return (
         <div className='my-3'>
-            <p className='text-white'>
-                you are like {likedPhotosLength} photos.
-            </p>
+            {!currentUser && (
+                <>
+                    <Alert variant={"light"}>
+                        Here you need to like or dislike photos before send it
+                        back to the photographer.
+                    </Alert>
+                    <p className='text-white'>
+                        You like {likedPhotosLength} photos.
+                    </p>
+                </>
+            )}
 
             {loading ? (
                 <div className='d-flex justify-content-center my-5'>
@@ -94,24 +105,69 @@ const Photos = () => {
             {!currentUser && (
                 <div className='my-3'>
                     <Button variant='primary' onClick={checkLikedPhotos}>
-                        Add to new Album
+                        Send
                     </Button>
-                    {err && <Alert variant={"warning"}>{msg}</Alert>}
+                    {err && (
+                        <Alert className='mt-2 ' variant={"warning"}>
+                            {msg}
+                        </Alert>
+                    )}
+
+                    {addingErr && (
+                        <Alert className='mt-2 ' variant={"warning"}>
+                            {confirmMsg}
+                        </Alert>
+                    )}
+
+                    {!sending && (
+                        <Alert className='mt-2 ' variant={"success"}>
+                            {confirmMsg}
+                        </Alert>
+                    )}
                 </div>
             )}
 
-            {currentUser && checkedPhotos.length > 0 ? (
+            {currentUser && uploadedPhotos.length > 0 ? (
                 <div className='my-3'>
-                    <Button variant='primary' onClick={handleAddTONewAlbum}>
+                    <Button
+                        variant='primary'
+                        onClick={() => {
+                            if (checkedPhotos.length > 0) {
+                                handleAddTONewAlbum();
+                                setErr(false);
+                            } else {
+                                setErr(true);
+                                setMsg("No selected photos.");
+                            }
+                        }}
+                    >
                         Add to new Album
                     </Button>
                     <Button
                         variant='danger'
                         className='ml-1'
-                        onClick={handleDeletePhoto}
+                        onClick={() => {
+                            if (checkedPhotos.length > 0) {
+                                handleDeletePhoto();
+                                setErr(false);
+                            } else {
+                                setErr(true);
+                                setMsg("No selected photos.");
+                            }
+                        }}
                     >
                         Delete
                     </Button>
+                    {!sending && (
+                        <Alert className='mt-2 ' variant={"success"}>
+                            {confirmMsg}
+                        </Alert>
+                    )}
+                    {err && (
+                        <Alert className='mt-2 ' variant={"warning"}>
+                            {msg}
+                        </Alert>
+                    )}
                 </div>
             ) : (
                 ""

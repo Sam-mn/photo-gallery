@@ -26,9 +26,9 @@ const Photo = ({
                         style={{
                             maxWidth: "19rem",
                             border: photo.like
-                                ? "3px solid green"
+                                ? "5px solid green"
                                 : photo.dislike
-                                ? "3px solid red"
+                                ? "5px solid red"
                                 : "",
                         }}
                     >
@@ -68,6 +68,7 @@ const Photo = ({
                                         style={{
                                             color: "#fff",
                                             cursor: "pointer",
+                                            border: "1px solid #000",
                                         }}
                                     />
                                 </div>
@@ -81,6 +82,7 @@ const Photo = ({
                                         style={{
                                             color: "#fff",
                                             cursor: "pointer",
+                                            border: "1px solid #000",
                                         }}
                                     />
                                 </div>

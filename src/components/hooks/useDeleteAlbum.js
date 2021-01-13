@@ -13,9 +13,7 @@ const useDeleteAlbum = () => {
                 .get()
                 .then((data) => {
                     const batch = db.batch();
-
                     data.forEach((photo) => {
-                        console.log(photo.data());
                         if (photo.data().albumId.length > 1) {
                             db.collection("images")
                                 .doc(photo.id)
