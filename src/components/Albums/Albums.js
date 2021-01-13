@@ -2,36 +2,20 @@ import { useEffect, useState } from "react";
 import CreateAlbum from "./CreateAlbum";
 import { Link } from "react-router-dom";
 import { Row, Container, Col, Card, Form, Button } from "react-bootstrap";
-import firebase, { db, storage } from "../../firebase/index";
-import { useAuth } from "../../context/useAuth";
+import { db } from "../../firebase/index";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEdit, faTimes } from "@fortawesome/free-solid-svg-icons";
 import { v4 as uuidv4 } from "uuid";
+import { FadeLoader } from "react-spinners";
+import placeholder from "../../assets/images/placeholder.png";
+import useGEtAlbums from "../hooks/useGetAlbums";
+import useDeleteAlbum from "../hooks/useDeleteAlbum";
 
 const Albums = () => {
-    const [albums, setAlbums] = useState([]);
     const [albumName, setAlbumName] = useState("");
-    const { currentUser } = useAuth();
     const [adding, setAdding] = useState(false);
-
-    useEffect(() => {
-        const unsubscribe = db
-            .collection("albums")
-            .where("owner", "==", currentUser.uid)
-            .onSnapshot((data) => {
-                const allAlbums = [];
-                data.forEach((album) => {
-                    allAlbums.push({
-                        id: album.id,
-                        ...album.data(),
-                    });
-                });
-
-                setAlbums(allAlbums);
-            });
-
-        return unsubscribe;
-    }, [currentUser.uid]);
+    const { albums, loading } = useGEtAlbums();
+    const { handleDeleteAlbum } = useDeleteAlbum();
 
     const handleEdit = (id) => {
         db.collection("albums").doc(id).update({
@@ -64,37 +48,6 @@ const Albums = () => {
         setAdding(true);
     };
 
-    const handleDeleteAlbum = async (id, albumId) => {
-        await db.collection("albums").doc(id).delete();
-
-        await db
-            .collection("images")
-            .where("albumId", "array-contains", albumId)
-            .get()
-            .then((data) => {
-                const batch = db.batch();
-
-                data.forEach((photo) => {
-                    console.log(photo.data());
-                    if (photo.data().albumId.length > 1) {
-                        db.collection("images")
-                            .doc(photo.id)
-                            .update({
-                                albumId: firebase.firestore.FieldValue.arrayRemove(
-                                    albumId
-                                ),
-                            });
-                    } else {
-                        const desertRef = storage.ref(photo.data().path);
-                        desertRef.delete();
-                        batch.delete(photo.ref);
-                    }
-                });
-
-                return batch.commit();
-            });
-    };
-
     return (
         <div>
             <Container>
@@ -123,7 +76,11 @@ const Albums = () => {
                 )}
 
                 <Row>
-                    {albums.length > 0 ? (
+                    {loading ? (
+                        <div className='d-flex justify-content-center my-5'>
+                            <FadeLoader color={"#fff"} size={100} />
+                        </div>
+                    ) : (
                         albums.map((album, i) => (
                             <Col md={4} className='mt-4' key={i}>
                                 <Card
@@ -136,7 +93,7 @@ const Albums = () => {
                                     >
                                         <Card.Img
                                             variant='top'
-                                            src='https://via.placeholder.com/50'
+                                            src={placeholder}
                                         />
                                     </Link>
                                     <Card.Body>
@@ -175,15 +132,13 @@ const Albums = () => {
                                         <FontAwesomeIcon icon={faEdit} />
                                     </div>
 
-                                    <div>
+                                    <div className='deleteAlbum'>
                                         <FontAwesomeIcon
                                             icon={faTimes}
                                             style={{
-                                                position: "absolute",
                                                 color: "black",
-                                                marginLeft: "0.5rem",
                                                 cursor: "pointer",
-                                                top: 0,
+                                                alignSelf: "center",
                                             }}
                                             onClick={() =>
                                                 handleDeleteAlbum(
@@ -196,8 +151,6 @@ const Albums = () => {
                                 </Card>
                             </Col>
                         ))
-                    ) : (
-                        <p className='text-white'>There is no album to show</p>
                     )}
                 </Row>
             </Container>

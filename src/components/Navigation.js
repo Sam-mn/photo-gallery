@@ -28,7 +28,11 @@ const Navigation = () => {
                                 My albums
                             </NavLink>
                             <NavDropdown
-                                title={currentUser.email}
+                                title={
+                                    currentUser.displayName
+                                        ? currentUser.displayName
+                                        : currentUser.email
+                                }
                                 id='basic-nav-dropdown'
                             >
                                 <NavDropdown.Item href='/profile'>

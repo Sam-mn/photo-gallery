@@ -15,13 +15,15 @@ const Album = () => {
     };
     return (
         <Container>
-            <Button
-                variant='outline-primary'
-                onClick={handleOnClick}
-                style={{ marginTop: "1rem" }}
-            >
-                Add new photos
-            </Button>
+            {currentUser && (
+                <Button
+                    variant='outline-primary'
+                    onClick={handleOnClick}
+                    style={{ marginTop: "1rem" }}
+                >
+                    Add new photos
+                </Button>
+            )}
 
             {currentUser && adding ? (
                 <div className='addPhotoDiv'>

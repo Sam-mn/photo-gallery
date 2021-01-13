@@ -90,6 +90,7 @@ body{
 .checkDiv{
     position: absolute;
     left: 0.5rem;
+    bottom: 0;
 }
 
 .homeDiv{
@@ -104,4 +105,17 @@ body{
         width: 70%;
         text-align: center;
     }
+}
+
+.deleteAlbum{
+     position: absolute;
+     background: red;
+     width: 1.5rem;
+     height: 1.5rem;
+     border-radius: 50%;
+     top: -13px;
+     left: 0.1rem;
+     display: flex;
+     justify-content: center;
+     align-self: center;
 }

@@ -1,5 +1,6 @@
 import { createContext, useContext, useEffect, useState } from "react";
 import { auth } from "../firebase/index";
+import { FadeLoader } from "react-spinners";
 
 const AuthContext = createContext();
 
@@ -33,7 +34,13 @@ const AuthContextProvider = (props) => {
 
     return (
         <AuthContext.Provider value={{ signup, signIn, currentUser, signOut }}>
-            {props.children}
+            {loading ? (
+                <div className='d-flex justify-content-center my-5'>
+                    <FadeLoader color={"#fff"} size={100} />
+                </div>
+            ) : (
+                props.children
+            )}
         </AuthContext.Provider>
     );
 };

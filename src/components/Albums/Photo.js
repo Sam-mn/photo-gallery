@@ -76,34 +76,22 @@ const Photo = ({
                             </div>
                         </Card.Body>
 
-                        {photo.checked ? (
-                            <div
-                                className='checkDiv'
-                                onClick={() => handleCheck(photo.id)}
-                            >
-                                <FontAwesomeIcon icon={faCheckSquare} />
-                            </div>
-                        ) : (
-                            <div
-                                className='checkDiv'
-                                onClick={() => handleUncheck(photo.id)}
-                            >
-                                <FontAwesomeIcon icon={faSquare} />
-                            </div>
-                        )}
-                        {/* <div className='reactionDiv'>
-                            {photo.like ? (
-                                <div className='likeIconDiv'>
-                                    <FontAwesomeIcon icon={faThumbsUp} />
-                                </div>
-                            ) : photo.dislike ? (
-                                <div className='dislikeIconDiv'>
-                                    <FontAwesomeIcon icon={faThumbsDown} />
+                        {currentUser &&
+                            (photo.checked ? (
+                                <div
+                                    className='checkDiv'
+                                    onClick={() => handleCheck(photo.id)}
+                                >
+                                    <FontAwesomeIcon icon={faCheckSquare} />
                                 </div>
                             ) : (
-                                ""
-                            )}
-                        </div> */}
+                                <div
+                                    className='checkDiv'
+                                    onClick={() => handleUncheck(photo.id)}
+                                >
+                                    <FontAwesomeIcon icon={faSquare} />
+                                </div>
+                            ))}
                     </Card>
                 </div>
             ))}

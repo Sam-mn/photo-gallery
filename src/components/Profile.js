@@ -11,7 +11,7 @@ const Profile = () => {
     const handleSubmit = async (e) => {
         e.preventDefault();
         console.log(currentUser);
-        return;
+
         currentUser
             .updateProfile({
                 displayName: nameRef.current.value,
@@ -34,11 +34,11 @@ const Profile = () => {
                                 <Form.Control
                                     type='text'
                                     ref={nameRef}
-                                    // defaultValue={
-                                    //     currentUser.displayName
-                                    //         ? currentUser.displayName
-                                    //         : ""
-                                    // }
+                                    defaultValue={
+                                        currentUser.displayName
+                                            ? currentUser.displayName
+                                            : ""
+                                    }
                                 />
                             </Form.Group>
                             <Form.Group id='email'>
@@ -46,7 +46,7 @@ const Profile = () => {
                                 <Form.Control
                                     type='email'
                                     ref={emailRef}
-                                    // defaultValue={currentUser.email}
+                                    defaultValue={currentUser.email}
                                 />
                             </Form.Group>
 
