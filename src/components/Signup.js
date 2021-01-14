@@ -27,7 +27,6 @@ const Signup = () => {
             setErr(false);
         } catch (err) {
             setErr(true);
-            console.log(err);
         }
     };
 

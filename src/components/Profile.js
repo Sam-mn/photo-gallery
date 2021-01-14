@@ -9,15 +9,11 @@ const Profile = () => {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        console.log(currentUser);
 
-        currentUser
-            .updateProfile({
-                displayName: nameRef.current.value,
-                email: emailRef.current.value,
-            })
-            .then((data) => console.log(data))
-            .catch((err) => console.log(err));
+        currentUser.updateProfile({
+            displayName: nameRef.current.value,
+            email: emailRef.current.value,
+        });
     };
 
     return (

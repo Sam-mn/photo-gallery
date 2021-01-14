@@ -33,13 +33,16 @@ const Photo = ({
                             }}
                         >
                             <SRLWrapper>
-                                <a href={photo.url} data-attribute='SRL'>
-                                    <Card.Img
-                                        variant='top'
-                                        src={photo.url}
-                                        alt={photo.name}
-                                    />
-                                </a>
+                                <div className='imgContainer'>
+                                    <a href={photo.url} data-attribute='SRL'>
+                                        <Card.Img
+                                            variant='top'
+                                            src={photo.url}
+                                            alt={photo.name}
+                                        />
+                                    </a>
+                                    <div class='overlay'>{photo.name}</div>
+                                </div>
                             </SRLWrapper>
                             {currentUser ? (
                                 ""

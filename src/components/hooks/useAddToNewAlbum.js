@@ -62,7 +62,6 @@ const useAddToNewAlbum = (checkedPhotos, name, likedPhoto, id) => {
                 });
             } else {
                 likedPhoto.forEach(async (photo) => {
-                    console.log(photo.id);
                     await db
                         .collection("images")
                         .doc(photo.id)

@@ -52,7 +52,6 @@ const AddPhoto = ({ setAdding }) => {
                 checked: false,
             };
 
-            console.log(image);
             await db.collection("images").add(image);
         });
 
@@ -60,7 +59,6 @@ const AddPhoto = ({ setAdding }) => {
     };
 
     const handleOnDelete = (name) => {
-        console.log(name);
         const newPhotosArr = droppedFiles.filter(
             (photo) => photo.name !== name
         );

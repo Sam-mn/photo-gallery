@@ -20,7 +20,6 @@ const Login = () => {
         } catch (err) {
             setError(true);
             setMsg(err.message);
-            console.log(err);
         }
     };
 

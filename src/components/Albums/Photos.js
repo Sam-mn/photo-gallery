@@ -64,7 +64,6 @@ const Photos = () => {
             handleAddTONewAlbum();
             setErr(false);
         } else {
-            console.log("its not equal");
             setErr(true);
             const leftPhotos =
                 imagesLength - (likedPhotosLength + dislikedPhotosLength);
