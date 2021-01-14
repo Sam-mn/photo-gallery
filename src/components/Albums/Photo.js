@@ -41,7 +41,7 @@ const Photo = ({
                                             alt={photo.name}
                                         />
                                     </a>
-                                    <div class='overlay'>{photo.name}</div>
+                                    <div className='overlay'>{photo.name}</div>
                                 </div>
                             </SRLWrapper>
                             {currentUser ? (

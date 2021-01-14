@@ -1,7 +1,8 @@
 import React from "react";
-import { Navbar, Nav, NavDropdown } from "react-bootstrap";
+import { Navbar, Nav } from "react-bootstrap";
 import { NavLink } from "react-router-dom";
 import { useAuth } from "../context/useAuth";
+import imageviewerbrand from "../assets/images/imageviewerbrand.png";
 
 const Navigation = () => {
     const { signOut, currentUser } = useAuth();
@@ -16,6 +17,13 @@ const Navigation = () => {
     return (
         <Navbar bg='light' expand='lg' className='py-0 px-3'>
             <NavLink to='/' className='navbar-brand'>
+                <img
+                    alt=''
+                    src={imageviewerbrand}
+                    width='30'
+                    height='30'
+                    className='d-inline-block align-top'
+                />
                 Photo gallery
             </NavLink>
 
@@ -24,28 +32,21 @@ const Navigation = () => {
                 <Nav className='ml-auto'>
                     {currentUser ? (
                         <>
+                            <NavLink to='/profile' className='nav-link'>
+                                {currentUser.displayName
+                                    ? currentUser.displayName
+                                    : currentUser.email}
+                            </NavLink>
                             <NavLink to='/albums' className='nav-link'>
                                 My albums
                             </NavLink>
-                            <NavDropdown
-                                title={
-                                    currentUser.displayName
-                                        ? currentUser.displayName
-                                        : currentUser.email
-                                }
-                                id='basic-nav-dropdown'
+                            <NavLink
+                                to='/logout'
+                                className='nav-link'
+                                onClick={handleLogout}
                             >
-                                <NavDropdown.Item href='/profile'>
-                                    Profile
-                                </NavDropdown.Item>
-                                <NavLink
-                                    to='/logout'
-                                    className='dropdown-item'
-                                    onClick={handleLogout}
-                                >
-                                    Log Out
-                                </NavLink>
-                            </NavDropdown>
+                                Log Out
+                            </NavLink>
                         </>
                     ) : (
                         <>

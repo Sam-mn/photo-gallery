@@ -35,7 +35,7 @@ const Signup = () => {
     return (
         <Row className='mt-5' style={{ maxWidth: "100%", margin: 0 }}>
             <Col md={{ span: 6, offset: 3 }}>
-                <Card>
+                <Card className='cardShadow'>
                     <Card.Body>
                         <Card.Title>Sign Up</Card.Title>
 
