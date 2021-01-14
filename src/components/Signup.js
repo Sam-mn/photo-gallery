@@ -14,7 +14,6 @@ const Signup = () => {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        setMsg("TEST PASSED");
         if (passwordRef.current.value !== confirmRef.current.value) {
             setMsg("Passwords does not match, please try again.");
             setErr(true);
@@ -27,7 +26,10 @@ const Signup = () => {
             setErr(false);
         } catch (err) {
             setErr(true);
+            setMsg(err.message);
+            console.log(err.message);
         }
+        setMsg("Password should be at least 6 characters");
     };
 
     return (

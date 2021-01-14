@@ -128,7 +128,12 @@ const Albums = () => {
                                                         </Form.Group>
                                                     </Form>
                                                 ) : (
-                                                    album.name
+                                                    <Link
+                                                        to={`/album/${album.name}/${album.albumId}`}
+                                                        className='albumName'
+                                                    >
+                                                        {album.name}
+                                                    </Link>
                                                 )}
                                             </Card.Title>
                                         </Card.Body>

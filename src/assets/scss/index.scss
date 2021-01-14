@@ -160,3 +160,11 @@ body{
 .imgContainer:hover .overlay {
     opacity: 1;
 }
+
+.albumName{
+    color: #000;
+    &:hover{
+        text-decoration: none;
+        color: #000;
+    }
+}

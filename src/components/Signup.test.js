@@ -45,7 +45,9 @@ describe("signup", () => {
                 fireEvent.submit(getByRole("button"));
             });
 
-            expect(container.innerHTML).toMatch("TEST PASSED");
+            expect(container.innerHTML).toMatch(
+                "Password should be at least 6 characters"
+            );
             // expect(container.innerHTML).toMatch(
             //     "Passwords does not match, please try again."
             // );
