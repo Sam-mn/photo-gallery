@@ -82,7 +82,8 @@ const Photos = () => {
                         back to the photographer.
                     </Alert>
                     <p className='text-white'>
-                        You like {likedPhotosLength} photos.
+                        You Want to keep {likedPhotosLength} photos from{" "}
+                        {imagesLength}.
                     </p>
                 </>
             )}
