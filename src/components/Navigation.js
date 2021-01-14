@@ -14,7 +14,7 @@ const Navigation = () => {
         }
     };
     return (
-        <Navbar bg='light' expand='lg' className='py-0 px-5'>
+        <Navbar bg='light' expand='lg' className='py-0 px-3'>
             <NavLink to='/' className='navbar-brand'>
                 Photo gallery
             </NavLink>

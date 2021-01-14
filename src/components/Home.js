@@ -17,8 +17,8 @@ const Home = () => {
                 </p>
             )}
             <div className='homeDiv'>
-                <h1>WELCOME TO OUR WEBSITE</h1>
-                <p>
+                <h1 className='text-center'>WELCOME TO OUR WEBSITE</h1>
+                <p className='text-center'>
                     Contrary to popular belief, Lorem Ipsum is not simply random
                     text. It has roots in a piece of classical Latin literature
                     from 45 BC, making it over 2000 years old.
