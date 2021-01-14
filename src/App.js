@@ -1,4 +1,4 @@
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import { Routes, Route } from "react-router-dom";
 import Navigation from "./components/Navigation";
 import Signup from "./components/Signup";
 import Login from "./components/Login";
@@ -15,40 +15,38 @@ import Profile from "./components/Profile";
 
 function App() {
     return (
-        <Router>
-            <AuthContextProvider>
-                <SimpleReactLightbox>
-                    <Navigation />
-                    <Routes>
-                        <Route path='/'>
-                            <Home />
-                        </Route>
-                        <Route path='/profile'>
-                            <Profile />
-                        </Route>
-                        <Route path='/signup'>
-                            <Signup />
-                        </Route>
-                        <Route path='/login'>
-                            <Login />
-                        </Route>
-                        <AuthRoute path='/albums'>
-                            <Albums />
-                        </AuthRoute>
-                        <Route path='/album/:name/:id'>
-                            <Album />
-                        </Route>
-                        <Route path='/logout'>
-                            <Logout />
-                        </Route>
-                        <Route path='/reset'>
-                            <ForgetPassword />
-                        </Route>
-                        <Route path='*' element={<NotFound />} />
-                    </Routes>
-                </SimpleReactLightbox>
-            </AuthContextProvider>
-        </Router>
+        <AuthContextProvider>
+            <SimpleReactLightbox>
+                <Navigation />
+                <Routes>
+                    <Route path='/'>
+                        <Home />
+                    </Route>
+                    <Route path='/profile'>
+                        <Profile />
+                    </Route>
+                    <Route path='/signup'>
+                        <Signup />
+                    </Route>
+                    <Route path='/login'>
+                        <Login />
+                    </Route>
+                    <AuthRoute path='/albums'>
+                        <Albums />
+                    </AuthRoute>
+                    <Route path='/album/:name/:id'>
+                        <Album />
+                    </Route>
+                    <Route path='/logout'>
+                        <Logout />
+                    </Route>
+                    <Route path='/reset'>
+                        <ForgetPassword />
+                    </Route>
+                    <Route path='*' element={<NotFound />} />
+                </Routes>
+            </SimpleReactLightbox>
+        </AuthContextProvider>
     );
 }
 

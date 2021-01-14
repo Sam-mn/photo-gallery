@@ -9,7 +9,7 @@ const Home = () => {
     return (
         <Container>
             {currentUser && (
-                <p className='text-white my-4'>
+                <p className='text-white my-4' data-testid='Welcome'>
                     Welcome{" "}
                     {currentUser.displayName
                         ? currentUser.displayName

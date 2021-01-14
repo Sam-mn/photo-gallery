@@ -30,16 +30,9 @@ const Album = () => {
                             onCopy={() => setCopied(true)}
                         >
                             <Button variant='outline-info'>
-                                Copy album url
+                                {copied ? "Copied" : "Copy album url"}
                             </Button>
                         </CopyToClipboard>
-                        {copied ? (
-                            <span
-                                style={{ color: "#fff", marginLeft: "0.5rem" }}
-                            >
-                                Copied.
-                            </span>
-                        ) : null}
                     </div>
                 </div>
             )}

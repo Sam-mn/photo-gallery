@@ -1,5 +1,5 @@
-import React, { useRef } from "react";
-import { Row, Col, Form, Button, Card } from "react-bootstrap";
+import React, { useRef, useState } from "react";
+import { Row, Col, Form, Button, Card, Alert } from "react-bootstrap";
 import { Link, useNavigate } from "react-router-dom";
 import { useAuth } from "../context/useAuth";
 
@@ -7,21 +7,26 @@ const Signup = () => {
     const emailRef = useRef();
     const passwordRef = useRef();
     const confirmRef = useRef();
+    const [err, setErr] = useState(false);
+    const [msg, setMsg] = useState("");
     const { signup } = useAuth();
     const navigate = useNavigate();
 
     const handleSubmit = async (e) => {
         e.preventDefault();
+        setMsg("TEST PASSED");
         if (passwordRef.current.value !== confirmRef.current.value) {
-            console.log("The passwords dose not match");
+            setMsg("Passwords does not match, please try again.");
+            setErr(true);
             return;
         }
 
         try {
             await signup(emailRef.current.value, passwordRef.current.value);
-            console.log("we have a new user, yaaaaaay");
             navigate("/");
+            setErr(false);
         } catch (err) {
+            setErr(true);
             console.log(err);
         }
     };
@@ -38,6 +43,7 @@ const Signup = () => {
                                 <Form.Label>Email</Form.Label>
                                 <Form.Control
                                     type='email'
+                                    aria-label='email'
                                     ref={emailRef}
                                     required
                                 />
@@ -48,6 +54,7 @@ const Signup = () => {
                                 <Form.Control
                                     type='password'
                                     ref={passwordRef}
+                                    aria-label='password'
                                     required
                                 />
                             </Form.Group>
@@ -57,6 +64,7 @@ const Signup = () => {
                                 <Form.Control
                                     type='password'
                                     ref={confirmRef}
+                                    aria-label='Password Confirmation'
                                     required
                                 />
                             </Form.Group>
@@ -68,6 +76,11 @@ const Signup = () => {
                 <div className='text-center mt-2 text-white'>
                     Already have an account? <Link to='/login'>Log In</Link>
                 </div>
+                {err && (
+                    <Alert variant='warning' className='mt-2'>
+                        {msg}
+                    </Alert>
+                )}
             </Col>
         </Row>
     );

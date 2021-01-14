@@ -60,7 +60,7 @@ const Photos = () => {
     };
 
     const checkLikedPhotos = () => {
-        if (likedPhotosLength + dislikedPhotosLength == imagesLength) {
+        if (likedPhotosLength + dislikedPhotosLength === imagesLength) {
             handleAddTONewAlbum();
             setErr(false);
         } else {

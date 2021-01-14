@@ -16,7 +16,6 @@ const Login = () => {
         try {
             await signIn(emailRef.current.value, passwordRef.current.value);
             setError(false);
-            console.log("we are in now broooo, yaaaaaay");
             navigate("/");
         } catch (err) {
             setError(true);
@@ -24,8 +23,6 @@ const Login = () => {
             console.log(err);
         }
     };
-
-    console.log(currentUser);
 
     return (
         <Row className='mt-5'>

@@ -56,7 +56,7 @@ const Albums = () => {
                     onClick={handleOnClick}
                     style={{ marginTop: "1rem" }}
                 >
-                    Create anew album
+                    Create a new album
                 </Button>
                 {adding ? (
                     <div className='addPhotoDiv'>
