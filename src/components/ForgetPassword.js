@@ -23,35 +23,33 @@ const ForgetPassword = () => {
             });
     };
     return (
-        <div>
-            <Row className='mt-5'>
-                <Col md={{ span: 6, offset: 3 }}>
-                    <Card>
-                        <Card.Body>
-                            <Card.Title>Forgot password</Card.Title>
+        <Row className='mt-5' style={{ maxWidth: "100%", margin: 0 }}>
+            <Col md={{ span: 6, offset: 3 }}>
+                <Card>
+                    <Card.Body>
+                        <Card.Title>Forgot password</Card.Title>
 
-                            <Form onSubmit={handleSubmit}>
-                                <Form.Group id='email'>
-                                    <Form.Label>Email</Form.Label>
-                                    <Form.Control
-                                        type='email'
-                                        ref={emailRef}
-                                        required
-                                    />
-                                </Form.Group>
+                        <Form onSubmit={handleSubmit}>
+                            <Form.Group id='email'>
+                                <Form.Label>Email</Form.Label>
+                                <Form.Control
+                                    type='email'
+                                    ref={emailRef}
+                                    required
+                                />
+                            </Form.Group>
 
-                                <Button type='submit'>Reset password</Button>
-                            </Form>
-                        </Card.Body>
-                    </Card>
-                    {error && (
-                        <Alert className='text-center mt-2 ' variant='warning'>
-                            {msg}
-                        </Alert>
-                    )}
-                </Col>
-            </Row>
-        </div>
+                            <Button type='submit'>Reset password</Button>
+                        </Form>
+                    </Card.Body>
+                </Card>
+                {error && (
+                    <Alert className='text-center mt-2 ' variant='warning'>
+                        {msg}
+                    </Alert>
+                )}
+            </Col>
+        </Row>
     );
 };
 

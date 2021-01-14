@@ -4,7 +4,7 @@ const Logout = () => {
     return (
         <Container>
             <div className='homeDiv'>
-                <h1>You are now logged out </h1>
+                <h1>You have been logged out.</h1>
             </div>
         </Container>
     );

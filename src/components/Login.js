@@ -25,7 +25,7 @@ const Login = () => {
     };
 
     return (
-        <Row className='mt-5'>
+        <Row className='mt-5' style={{ maxWidth: "100%", margin: 0 }}>
             <Col md={{ span: 6, offset: 3 }}>
                 <Card>
                     <Card.Body>

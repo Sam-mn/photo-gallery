@@ -80,77 +80,89 @@ const Albums = () => {
                         <FadeLoader color={"#fff"} size={100} />
                     </div>
                 ) : (
-                    <Row>
-                        {albums.map((album, i) => (
-                            <Col md={4} className='mt-4' key={i}>
-                                <Card
-                                    style={{
-                                        maxWidth: "19rem",
-                                    }}
+                    <Row className='my-4 justify-content-sm-center'>
+                        {albums.length > 0 ? (
+                            albums.map((album, i) => (
+                                <Col
+                                    sm={12}
+                                    md={6}
+                                    lg={4}
+                                    className='mt-4'
+                                    key={i}
                                 >
-                                    <Link
-                                        to={`/album/${album.name}/${album.albumId}`}
+                                    <Card
+                                        style={{
+                                            maxWidth: "100%",
+                                        }}
                                     >
-                                        <Card.Img
-                                            variant='top'
-                                            src={placeholder}
-                                        />
-                                    </Link>
-                                    <Card.Body>
-                                        <Card.Title className='text-center'>
-                                            {album.editing ? (
-                                                <Form
-                                                    onSubmit={(e) =>
-                                                        handleOnSubmit(
-                                                            e,
-                                                            album.id
-                                                        )
-                                                    }
-                                                >
-                                                    <Form.Group>
-                                                        <Form.Control
-                                                            type='text'
-                                                            placeholder='Album name'
-                                                            onChange={
-                                                                handleOnChange
-                                                            }
-                                                            defaultValue={
-                                                                album.name
-                                                            }
-                                                        />
-                                                    </Form.Group>
-                                                </Form>
-                                            ) : (
-                                                album.name
-                                            )}
-                                        </Card.Title>
-                                    </Card.Body>
-                                    <div
-                                        className='editDiv'
-                                        onClick={() => handleEdit(album.id)}
-                                    >
-                                        <FontAwesomeIcon icon={faEdit} />
-                                    </div>
+                                        <Link
+                                            to={`/album/${album.name}/${album.albumId}`}
+                                        >
+                                            <Card.Img
+                                                variant='top'
+                                                src={placeholder}
+                                            />
+                                        </Link>
+                                        <Card.Body>
+                                            <Card.Title className='text-center'>
+                                                {album.editing ? (
+                                                    <Form
+                                                        onSubmit={(e) =>
+                                                            handleOnSubmit(
+                                                                e,
+                                                                album.id
+                                                            )
+                                                        }
+                                                    >
+                                                        <Form.Group>
+                                                            <Form.Control
+                                                                type='text'
+                                                                placeholder='Album name'
+                                                                onChange={
+                                                                    handleOnChange
+                                                                }
+                                                                defaultValue={
+                                                                    album.name
+                                                                }
+                                                            />
+                                                        </Form.Group>
+                                                    </Form>
+                                                ) : (
+                                                    album.name
+                                                )}
+                                            </Card.Title>
+                                        </Card.Body>
+                                        <div
+                                            className='editDiv'
+                                            onClick={() => handleEdit(album.id)}
+                                        >
+                                            <FontAwesomeIcon icon={faEdit} />
+                                        </div>
 
-                                    <div className='deleteAlbum'>
-                                        <FontAwesomeIcon
-                                            icon={faTimes}
-                                            style={{
-                                                color: "black",
-                                                cursor: "pointer",
-                                                alignSelf: "center",
-                                            }}
-                                            onClick={() =>
-                                                handleDeleteAlbum(
-                                                    album.id,
-                                                    album.albumId
-                                                )
-                                            }
-                                        />
-                                    </div>
-                                </Card>
-                            </Col>
-                        ))}
+                                        <div className='deleteAlbum'>
+                                            <FontAwesomeIcon
+                                                icon={faTimes}
+                                                style={{
+                                                    color: "black",
+                                                    cursor: "pointer",
+                                                    alignSelf: "center",
+                                                }}
+                                                onClick={() =>
+                                                    handleDeleteAlbum(
+                                                        album.id,
+                                                        album.albumId
+                                                    )
+                                                }
+                                            />
+                                        </div>
+                                    </Card>
+                                </Col>
+                            ))
+                        ) : (
+                            <p className='text-white'>
+                                There is no albums to show.
+                            </p>
+                        )}
                     </Row>
                 )}
             </Container>

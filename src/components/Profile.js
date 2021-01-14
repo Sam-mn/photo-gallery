@@ -1,7 +1,6 @@
 import React, { useRef } from "react";
 import { Row, Col, Form, Button, Card } from "react-bootstrap";
 import { useAuth } from "../context/useAuth";
-import { auth } from "../firebase/index";
 
 const Profile = () => {
     const nameRef = useRef();
@@ -22,7 +21,7 @@ const Profile = () => {
     };
 
     return (
-        <Row className='mt-5'>
+        <Row className='mt-5' style={{ maxWidth: "100%", margin: 0 }}>
             <Col md={{ span: 6, offset: 3 }}>
                 <Card>
                     <Card.Body>

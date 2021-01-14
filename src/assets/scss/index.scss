@@ -1,7 +1,7 @@
 @import "~bootstrap/scss/bootstrap";
 
 body{
-    background-color: #333;
+    background-color: #1d1d1d;
 }
 
 .dropzone{
@@ -79,10 +79,14 @@ body{
     border-radius: 0.25rem;
     min-height: 13rem;
     padding-bottom: 2rem;
+    @media only screen and (max-width: 600px) {
+        width: 100%;
+         left: 0;
+    }
 }
 
 .photosList{
-   width: 70%;
+   max-width: 70%;
    margin: 0 auto;
    border-radius: 0.25rem;
 }
@@ -125,4 +129,9 @@ body{
     justify-content: space-between;
     align-items: center;
     padding-top: 1rem;
+}
+
+.fileNameSpan{
+    max-width: 70%;
+    overflow: scroll;
 }
